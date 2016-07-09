@@ -1,0 +1,120 @@
+{% load i18n %}
+{% load static from staticfiles %}
+
+	<!-- Clients -->
+	<section class="section clients">
+		<div class="container">
+			<header class="text-center">
+				<div class="row">
+					<div class="col-xs-12 col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
+						<h2>Affiliates</h2>
+						<p>Enlingo work with Weibo, Wechat, Renren, Zhihu, Baidu Zhidao to deliver our members'service profiles using the richest and most focussed Chinese audience social media campaigns.</p>
+					</div>
+				</div>
+			</header>
+
+			<div class="row">
+				<div class="col-xs-4 col-md-2 i">
+					<a href="#" title="#">
+						<img src="{% static "tmp/clients/wechat.png" %}" alt="#" width="96" height="96" class="img-responsive">
+					</a>
+				</div>
+				<div class="col-xs-4 col-md-2 i">
+					<a href="#" title="#">
+						<img src="{% static "tmp/clients/weibo.png" %}" alt="#" width="96" height="96">
+					</a>
+				</div>
+				<div class="col-xs-4 col-md-2 i">
+					<a href="#" title="#">
+						<img src="{% static "tmp/clients/zhihu.png" %}" alt="#" width="96" height="96">
+					</a>
+				</div>
+				<div class="col-xs-4 col-md-2 i">
+					<a href="#" title="#">
+						<img src="{% static "tmp/clients/baidu.png" %}" alt="#" width="96" height="96">
+					</a>
+				</div>
+				<div class="col-xs-4 col-md-2 i">
+					<a href="#" title="#">
+						<img src="{% static "tmp/clients/renren.png" %}" alt="#" width="96" height="96">
+					</a>
+				</div>
+				<div class="col-xs-4 col-md-2 i">
+					<a href="#" title="#">
+						<img src="{% static "tmp/clients/Aliyun.png" %}" alt="#" width="96" height="96">
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Business theme -->
+	<div class="section businessTheme">
+		<div class="container text-center">
+			<h2>Enlingo</h2>
+			<a href="{%  url "pinax_blog:blog" %}" title="News" class="btn btn-lg btn-yellow btn-effect"><span>News</span></a>
+		</div>
+	</div>
+
+		<div class="wrap">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-6 col-sm-3 i">
+						<h2>Enlingo</h2>
+						<div class="content">
+							Unit 1005/3 Herbert Street<br />
+							St Leonards, NSW<br />
+							Australia 2065<br />
+							+612 8006 2982<br />
+							<a href="mailto:member.support@enlingo.com" title="#">member.support@enlingo.com</a>
+						</div>
+					</div>
+					<div class="col-xs-6 col-sm-3 i">
+						<h2>Newsletter</h2>
+						<p>Get the latest news via email:</p>
+                            {% if error %}
+                                <p>{% trans "Due to a technical error we were not able to submit your confirmation email. This could be because your email address is invalid." %}</p>
+
+                                {% comment %} Replace the the following dummy with a valid email address and remove this comment.
+
+                                <p>{% trans "If the error persists, please don't hesitate to contact us at the following email address:" %} <a href="mailto:info@foobar.com">info@foobar.com</a></p>
+
+                                {% endcomment %}
+                            {% else %}
+						<form enctype="multipart/form-data" method="post" action="{%  url "newsletter_subscribe_confirm" 'socialpost-updates' %}">
+                            {% csrf_token %}
+							<input type="email" class="form-control" name="email_field">
+							<button type="submit" id="id_submit" class="submit sprite" name="submit" value="{% trans "Subscribe" %}"></button>
+						</form>
+                            {% endif %}
+					</div>
+					<div class="col-xs-6 col-sm-3 i">
+						<h2>Follow</h2>
+						<p>Get close to us</p>
+
+						<div class="socials">
+							<a href="https://twitter.com/EnlingoAust" title="EnlingoAust" class="twitter"><i class="fa fa-twitter"></i></a>
+							<a href="https://www.linkedin.com/company/13189322?trk=tyah&trkInfo=clickedVertical%3Acompany%2CclickedEntityId%3A13189322%2Cidx%3A1-1-1%2CtarId%3A1467353699097%2Ctas%3Aenlingo" title="Enlingo Linkedin" class="linkedin"><i class="fa fa-linkedin"></i></a>
+						</div>
+					</div>
+					<div class="col-xs-6 col-sm-3 i">
+						<h2>About Us</h2>
+						<div class="content clearfix">
+							<a href="{% url "company" %}" title="#">Company</a>
+							<a href="{% url "management" %}" title="#">Management</a>
+							<a href="{% url "contact" %}" title="#">Contact Us</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Copyright -->
+		<div class="copyright">
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-6 i">Copyright © 2016 <a href="http://www.enlingo.com/" title="Enlingo">Enlingo</a></div>
+					<div class="col-xs-6 i">Web Design: <a href="http://www.enlingo.com/" title="Juraj Molnar" target="_blank">Enlingo Team</a></div>
+				</div>
+			</div>
+		</div>

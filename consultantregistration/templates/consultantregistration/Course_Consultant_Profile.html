@@ -1,0 +1,121 @@
+{% extends "site_base.html" %}
+{% load static from staticfiles %}
+{% load thumbnail %}
+{% load aliyunthumbnail %}
+{% load pinax_blog_tags %}
+{% load i18n %}
+
+
+{% block head_title %}Enlingo留西洋网{% endblock %}
+{% block extra_head %}
+<link rel="icon" type="image/png" href="{% static "images/favicon.ico" %}">
+<link href="{% static "assets/css/base.css" %}" rel="stylesheet" />{% endblock %}
+
+{% block body_class %}single single-u_member postid-180 full-width custom-background-empty wpb-js-composer js-comp-ver-4.9 vc_responsive no-js{% endblock %}
+
+{% block body_base %}
+    {% include "_messages.html" %}
+            <div class="page-heading">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 col-sm-8">
+                            <h1>专业顾问</h1>
+                        </div>
+                        <div class="pathway col-md-4 col-sm-4 hidden-xs text-right">
+                            <div class="breadcrumbs">
+                                <a href="#" rel="v:url" property="v:title">Home</a> \ <span typeof="v:Breadcrumb">
+                                <a rel="v:url" property="v:title" href="#">member</a></span>
+                            </div><!-- .breadcrumbs -->                
+                        </div>
+                    </div><!--/row-->
+                </div><!--/container-->
+            </div><!--/page-heading-->
+            <div id="body">
+                <div class="container">
+                    <div class="content-pad-3x">
+                        <div class="row">
+                            <div id="content" class="col-md-12">
+                                <article class="single-event-content">
+                                    <div class="member-item">
+                                        <div class="row">
+                                            <div class="col-md-4 col-xs-5">
+                                                <div class="content-pad">
+                                                    <div class="item-thumbnail">
+                                                        <img width="263" height="263" src="{%  locate_image_location object whq="@500w_500h_100Q" %}" sizes="(max-width: 263px) 100vw, 263px">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8 col-xs-7">
+                                                <div class="content-pad">
+                                                    <div class="item-content profile-detail-item">
+                                                        <h3 class="item-title">{{ teacher }} 顾问</h3>
+                                                        <h4 class="small-text">{{ position }}</h4>
+                                                        <div class="member-tax small-text">
+                                                        </div>
+                                                        <h5>居住城市 : <span>{{ location }}</span></h5>
+                                                        <h5>电子邮箱 : <span>{{  email }}</span></h5>
+                                                        <h5>学历 : <span>{{ acadetails }}</span></h5>
+                                                        <h5>专业注册详细信息 : <span>{{  regdetails }}</span></h5>
+                                                        <h5>工作经验 : <span>{{ workposition }}</span></h5>
+                                                        <h5>以前居住地 : <span>{{ lived }}</span></h5>
+                                                        <ul class="list-inline social-light">
+                                                            <li><a class="btn btn-default social-icon" href="#"><i class="fa fa-weibo"></i></a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div><!--/content-pad-->
+                                            </div>
+                                        </div><!--/row-->
+                                    </div><!--/member-item-->
+                                    
+                                    <h1 class="course-list-title">博客</h1>
+                                    <div class="courses-list profile-table">
+                                        <div class="wrap-field wrap-field-last"><strong>博客更新: </strong>{{ current_enlingopost.published|date }}</div>
+                                        <table class="table course-list-table">
+                                            <thead class="main-color-1-bg dark-div">
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>博客</th>
+                                                    <th>学习科目</th>
+                                                    <th>博客日期</th>
+                                                    <th>观看</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            {%  for enlingopost in enlingoposts %}
+                                                {%  if enlingopost.published %}
+                                                <tr>
+                                                    <td>{{ enlingopost.pk }}</td>
+                                                    <td>{{ enlingopost.content_html|safe }}</td>
+                                                    <td>{{ enlingopost.section }}</td>
+                                                    <td>{{ enlingopost.published }}</td>
+                                                    <td></td>
+                                                </tr>
+                                                {%  endif %}
+                                            {%  endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div><!--/courses-list-->
+                                </article>
+        			        </div><!--/content-->
+                        </div><!--/row-->
+                    </div><!--/content-pad-3x-->
+                </div><!--/container-->
+            </div><!--/body-->
+    {% endblock %}
+
+{% block extra_body %}
+{% include "_mobile.html" %}
+ {% include "_contact_bar.html" %}
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+        <script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="mod/base"
+            src="{% static "assets/js/base.js" %}"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#id_username').focus();
+        });
+    </script>
+{% endblock %}

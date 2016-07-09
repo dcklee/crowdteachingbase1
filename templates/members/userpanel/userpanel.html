@@ -1,0 +1,188 @@
+{% extends "userpanel/userpanel_site_base.html" %}
+{% load static from staticfiles %}
+{% load pinax_blog_tags %}
+{% load account_tags %}
+{% load bootstrap %}
+{% load i18n %}
+{% load pinax_announcements_tags %}
+{% load guardian_tags %}
+
+
+{% block head_title %}Enlingo Members Australia{% endblock %}
+
+{% block body_class %}flat{% endblock %}
+{% block body_extra_attributes %}data-color="blue"{% endblock %}
+
+{% block body %}
+				<div id="breadcrumb">
+					<a href="#" title="Go to Home" class="tip-bottom"><i class="fa fa-home"></i> Home</a>
+					<a href="#" class="current">Post Manager</a>
+				</div>
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-xs-12 center" style="text-align: center;">
+							<ul class="quick-actions">
+                                {% if perms.blog.add_post %}<li>
+									<a href="{% url 'userpanel:post-add' %}">
+										<i class="icon-enlingopost"></i>
+										Create Post
+									</a>
+								</li>{% endif %}
+{#								<li>#}
+{#									<a href="#">#}
+{#										<i class="icon-shopping-bag"></i>#}
+{#										Manage Orders#}
+{#									</a>#}
+{#								</li>#}
+{#								<li>#}
+{#									<a href="#">#}
+{#										<i class="icon-database"></i>#}
+{#										Manage DB#}
+{#									</a>#}
+{#								</li>#}
+								<li>
+									<a href="http://www.enlingo.com/consultant_profile/{{ request.user.profile.pk }}">
+										<i class="icon-client"></i>
+										Enlingo Profile
+									</a>
+								</li>
+{#								<li>#}
+{#									<a href="#">#}
+{#										<i class="icon-lock"></i>#}
+{#										Security#}
+{#									</a>#}
+{#								</li>#}
+								<li>
+									<a href="#">
+										<i class="icon-graph"></i>
+										Statistics
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<br />
+					<div class="row">
+						<div class="col-xs-12 col-sm-6">
+							<div class="widget-box">
+								<div class="widget-title"><span class="icon"><i class="fa fa-file"></i></span><h5>Recent Posts</h5><span title="{{ memberposts.count }} total posts" class="label label-info tip-left">{{ memberposts.count }}</span></div>
+								<div class="widget-content nopadding">
+									<ul class="recent-posts">{%  for PostDetail in memberposts %}
+										<li>
+											<div class="user-thumb">
+												<img width="40" height="40" alt="User" src='{{PostDetail.author.profile.profile_image.url}}'>
+											</div>
+											<div class="article-post">
+												<span class="user-info"> By: {{  PostDetail.author }} on {{  PostDetail.created }}  Area of Study: {{ PostDetail.section }} </span>
+                                                <p>
+													{{ PostDetail.title }}
+												</p>
+                                                <p>
+                                                    {{ PostDetail.description }}
+												</p>
+												{% if perms.blog.change_post %}<a href="{% url 'userpanel:post-edit' PostDetail.pk %}" class="btn btn-primary btn-xs">Edit</a> {%  endif %} <!--<a href="#" class="btn btn-success btn-xs">Publish</a>--> {% if perms.blog.delete_post %} <a href="{% url 'userpanel:post-delete' PostDetail.pk %}" class="btn btn-danger btn-xs">Delete</a> {%  endif %}
+											</div>
+										</li>{%  endfor %}
+										<li class="viewall">
+											<a title="View all posts" class="tip-top" href="#"> + View all + </a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						{% announcements as announcement_list %}
+                        {% if announcement_list %}
+                                {% for announcement in announcement_list %}
+                        <div class="col-xs-12 col-sm-6">
+							<div class="widget-box">
+                                <div class="widget-title"><span class="icon"><i class="fa fa-comment"></i></span><h5>Enlingo Post of the Week Competition Quiz</h5></div>
+                                    <div class="widget-content">
+                                            <form action="{% url 'userpanel:userpanel_main' %}" method="post" class="form-horizontal" autocapitalize="off" {% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
+                                                {% csrf_token %}
+                                                {% if redirect_field_value %}
+                                                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                                                {% endif %}
+                                                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                                                <input type="hidden" name="announcement_id" value="{{ announcement.pk }}" />
+                                                <div class="form-group">
+                                                    <span class="label label-info col-sm-3 col-md-3 col-lg-2">Question</span>
+                                                    <div class="col-sm-9 col-md-9 col-lg-10">
+                                                        {{ announcement.content }}<br />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <span class="label label-info col-sm-3 col-md-3 col-lg-2">Area of Study</span>
+                                                    <div class="col-sm-9 col-md-9 col-lg-10">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <input type="hidden" name="section" value="{{ announcement.title }}" />
+                                                                {{ announcement.title }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <span class="label label-info col-sm-3 col-md-3 col-lg-2">Institution</span>
+                                                    <div class="col-sm-9 col-md-9 col-lg-10">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                    <select name="title">
+                                                                        {%  for institute in institutelist %}
+                                                                        <option>{{ institute.name }}</option>
+                                                                        {%  endfor %}
+                                                                    </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <span class="label label-info col-sm-3 col-md-3 col-lg-2">Post</span>
+                                                    <div class="col-sm-9 col-md-9 col-lg-10">
+                                                        <textarea rows="5" class="form-control" name="description" maxlength="140" placeholder="Maximum 140 characters here..."></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-actions">
+                                                    <button type="submit" class="btn btn-primary btn-sm">Save</button></a>
+                                                </div>
+                                            </form>
+                                    </div>
+							</div>
+						</div>{% endfor %}
+                    {% endif %}
+
+                        <div class="col-xs-12 col-sm-6">
+							<div class="widget-box">
+								<div class="widget-title"><span class="icon"><i class="fa fa-comment"></i></span><h5>Enlingo Manager Comments</h5><span title="0 total comments" class="label label-info tip-left">0</span></div>
+								<div class="widget-content nopadding">
+									<ul class="recent-comments">
+										<li class="viewall">
+											<a title="View all comments" class="tip-top" href="#"> + View all + </a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+{#						<div class="col-xs-12">#}
+{#							<div class="widget-box widget-calendar">#}
+{#								<div class="widget-title"><span class="icon"><i class="fa fa-calendar"></i></span><h5>Calendar</h5></div>#}
+{#								<div class="widget-content nopadding">#}
+{#									<div class="calendar"></div>#}
+{#								</div>#}
+{#							</div>#}
+{#						</div>#}
+					</div>
+					
+				</div>
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#id_username').focus();
+        });
+    </script>
+    <script src="//enlingo.oss-cn-shenzhen.aliyuncs.com/site_media/static/assets/js/unicorn.form_common.js"></script>
+{% endblock %}
