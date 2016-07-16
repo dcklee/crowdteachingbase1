@@ -75,9 +75,11 @@ class CourseDetailView(generic.DetailView):
         # following two django querysets return all related consultant profile objects to Course instance
         course = get_object_or_404(Course, pk=self.kwargs.get('course1'), areaofstudy=self.kwargs.get('studyarea'))
         courseconsultants = CourseConsultantRelationship.objects.filter(course_rep=course.pk)
+        context['interestarea'] = AreaOfStudy.objects.all()
         context['courseconsultants'] = courseconsultants
         context['course1'] = self.kwargs.get('course1')
         context['studyarea'] = self.kwargs.get('studyarea')
+        context['courselist'] = Course.objects.filter(areaofstudy=self.kwargs.get('studyarea'))
         return context
 
 class CourseConsultantChatView(generic.DetailView):
@@ -141,6 +143,8 @@ class CourseConsultantChatView(generic.DetailView):
             context['workdetails'] = conprofile.consultantregistrationdetails.prior_work_position
             context['lived'] = conprofile.consultantregistrationdetails.cities_lived_worked_in
             context['location'] = conprofile.consultantregistrationdetails.location
+            #Related Courses
+            context['courselist'] = Course.objects.filter(areaofstudy=self.kwargs.get('studyarea'))
             return context
 
     def get_object(self, queryset=None):

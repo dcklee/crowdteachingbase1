@@ -85,7 +85,7 @@
                                 <div class="row">
                                     <div id="course-search-widget-2" class=" col-md-12  widget course_search_widget">
                                         <div class=" widget-inner">
-                                            <h2 class="widget-title maincolor2">Search</h2>        
+                                            <h2 class="widget-title maincolor2">搜索</h2>
                                             <form role="search" method="get" id="searchform" class="u-course-search-form" action="#">
                                                 <div class="input-group">
                                                     <input type="text" value="" name="s" id="s" placeholder="SEARCH" class="form-control" />
@@ -95,17 +95,11 @@
                                                         <button type="submit" id="searchsubmit" class="btn btn-default u-course-search-submit" ><i class="fa fa-search"></i></button>
                                                     </span>
                                                 </div>
-                                                <h2 class="widget-title maincolor2 widget-title-study">All Areas of Study</h2>    
+                                                <h2 class="widget-title maincolor2 widget-title-study">所有兴趣</h2>
                                                 <ul class="widget-ul-sidebar">
-                                                    <li><a href="#" data-value="">All</a></li>
-                                                    <li><a href="#" data-value="course-autumn-2014">Civil Engineering</a></li>
-                                                    <li><a href="#" data-value="bachelor"> Computer Sciences</a></li>
-                                                    <li><a href="#" data-value="course">Business</a></li>
-                                                    <li><a href="#" data-value="study-2">Mechanical Engineering</a></li>                
-                                                    <li><a href="#" data-value="study-2">Arts and Music</a></li>                
-                                                    <li><a href="#" data-value="study-2">Medical Sciences</a></li>                
-                                                    <li><a href="#" data-value="study-2">Electrical Engineering</a></li>                
-                                                    <li><a href="#" data-value="study-2">Architecture</a></li>                
+                                                    {%  for interest in interestarea %}
+                                                    <li><a href="{% url "coursesearch:areastudy" interest.pk %}" data-value="">{{ interest.name }}</a></li>
+                                                    {%  endfor %}
                                                 </ul>
                                             </form>
                                         </div>
@@ -113,7 +107,7 @@
                                     <div id="advanced-recent-posts-2" class=" col-md-12 border widget advanced_recent_posts_widget">
                                         <div class=" widget-inner">
                                             <div class="uni-lastest">
-                                                <h2 class="widget-title maincolor2">Latest post</h2>
+                                                <h2 class="widget-title maincolor2">最新老师博客</h2>
                                                 <div class="item">
                                                     <div class="thumb item-thumbnail">
                                                         <a href="#" title="Your Career Starts Here">
@@ -126,9 +120,9 @@
                                                     </div>
                                                     <div class="u-details item-content">
                                                         <h5>
-                                                            <a href="#" title="Your Career Starts Here" class="main-color-1-hover">Your Career Starts Here</a>
+                                                            <a href="#" title="Your Career Starts Here" class="main-color-1-hover">中国PK美国烧烤</a>
                                                         </h5>
-                                                        <span>June 3, 2014</span>
+                                                        <span>2016年7月3日</span>
                                                     </div>
                                                     <div class="clearfix"></div>
                                                 </div>
@@ -144,9 +138,9 @@
                                                     </div>
                                                     <div class="u-details item-content">
                                                         <h5>
-                                                            <a href="#" title="Spark Of Genius" class="main-color-1-hover">Spark Of Genius</a>
+                                                            <a href="#" title="Spark Of Genius" class="main-color-1-hover">日本威士忌酿酒行业如何成名</a>
                                                         </h5>
-                                                        <span>June 3, 2014</span>
+                                                        <span>2016年7月10日</span>
                                                     </div>
                                                     <div class="clearfix"></div>
                                                 </div>
@@ -156,10 +150,11 @@
                                     <div id="advanced-latest-course-4" class=" col-md-12  widget course_listing_widget">
                                         <div class=" widget-inner">
                                             <div class="uni-lastest">
-                                                <h2 class="widget-title maincolor2">Courses List</h2>
+                                                <h2 class="widget-title maincolor2">相关课程</h2>
+                                                {%  for course in courselist %}
                                                 <div class="item">
                                                     <div class="thumb item-thumbnail">
-                                                        <a href="#" title="Chemical Engineering">
+                                                        <a href="{% url "coursesearch:course" studyarea course.pk %}" title="{{ course.course_name }}">
                                                             <div class="item-thumbnail">
                                                                 <img width="80" height="80" src="{% static "images/002-80x80.jpg" %}" class="attachment-thumb_80x80 size-thumb_80x80 wp-post-image" alt="002"  sizes="(max-width: 80px) 100vw, 80px" />
                                                                 <div class="thumbnail-hoverlay main-color-1-bg"></div>
@@ -169,28 +164,12 @@
                                                     </div>
                                                     <div class="u-details item-content">
                                                         <h5>
-                                                            <a href="#" title="Chemical Engineering" class="main-color-1-hover">Chemical Engineering</a>
-                                                        </h5><span>December 25, 2015</span>
+                                                            <a href="{% url "coursesearch:course" studyarea course.pk %}" title="{{ course.course_name }}" class="main-color-1-hover">{{ course.course_name }}</a>
+                                                        </h5><span> {{ course.course_start_date }}</span>
                                                     </div>
                                                     <div class="clearfix"></div>
                                                 </div>
-                                                <div class="item">
-                                                    <div class="thumb item-thumbnail">
-                                                        <a href="#" title="Information System">
-                                                            <div class="item-thumbnail">
-                                                                <img width="80" height="80" src="{% static "images/university-course-001-80x80.jpg" %}" class="attachment-thumb_80x80 size-thumb_80x80 wp-post-image"  sizes="(max-width: 80px) 100vw, 80px" />
-                                                                <div class="thumbnail-hoverlay main-color-1-bg"></div>
-                                                                <div class="thumbnail-hoverlay-cross"></div>
-                                                            </div>
-                                                        </a>
-                                                    </div>
-                                                    <div class="u-details item-content">
-                                                        <h5>
-                                                            <a href="http://university.cactusthemes.com/course/information-system-course/" title="Information System" class="main-color-1-hover">Information System</a>
-                                                        </h5><span>March 11, 2015</span>
-                                                    </div>
-                                                    <div class="clearfix"></div>
-                                                </div>
+                                                {%  endfor %}
                                             </div>
                                         </div>
                                     </div>

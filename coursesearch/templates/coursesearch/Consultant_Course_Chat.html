@@ -137,20 +137,16 @@
                                                 <h3>有关课程</h3>
                                                 <div class="ev-content">
                                                     <div class="row">
+                                                        {%  for course in courselist %}
                                                         <div class="col-md-6 col-sm-6 related-item">
-                                                            <div class="thumb"><a href="#"><img width="80" height="80" src="{% static "images/university-course-008-80x80.jpg" %}" class="attachment-thumb_80x80 size-thumb_80x80 wp-post-image" alt="university-course-008" sizes="(max-width: 80px) 100vw, 80px"></a></div>
+                                                            <div class="thumb"><a href="{% url "coursesearch:course" studyarea course.pk %}"><img width="80" height="80" src="{% static "images/university-course-008-80x80.jpg" %}" class="attachment-thumb_80x80 size-thumb_80x80 wp-post-image" alt="university-course-008" sizes="(max-width: 80px) 100vw, 80px"></a></div>
                                                             <div class="ev-title"> 
-                                                                <a href="#" class="related-ev-title main-color-1-hover">Bachelor Of Nursing</a>
+                                                                <a href="{% url "coursesearch:course" studyarea course.pk %}" class="related-ev-title main-color-1-hover">{{ course.course_name }}</a>
                                                             </div>
-                                                            <div class="ev-start small-text">July 24, 2015</div>
+                                                            <div class="ev-start small-text">{{ course.course_start_date }}</div>
                                                             <div class="clear"></div>
                                                         </div>
-                                                        <div class="col-md-6 col-sm-6 related-item">
-                                                            <div class="thumb"><a href="#"><img width="80" height="80" src="{% static "images/university-course-002-80x80.jpg" %}" class="attachment-thumb_80x80 size-thumb_80x80 wp-post-image" alt="university-course-007" sizes="(max-width: 80px) 100vw, 80px"></a></div>
-                                                            <div class="ev-title"> <a href="#" class="related-ev-title main-color-1-hover">Game Theory 101</a></div>
-                                                            <div class="ev-start small-text">June 26, 2016</div>
-                                                            <div class="clear"></div>
-                                                        </div>
+                                                        {%  endfor %}
                                                     </div>
                                                </div>
                                            </div>
